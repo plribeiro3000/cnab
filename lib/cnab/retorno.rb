@@ -7,6 +7,7 @@ module Cnab
       @header_lote = args[:header_lote]
       @trailer_arquivo = args[:trailer_arquivo]
       @trailer_lote = args[:trailer_lote]
+      @segmento_y_50 = args[:segmento_y_50]
       @detalhes = args[:detalhes] || []
     end
 
