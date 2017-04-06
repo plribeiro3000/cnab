@@ -24,6 +24,6 @@ tipo_inscricao: 127..127
 num_inscricao: 128..142
 nome: 143..182
 conta_cobranca: 183..192
-valor_tarifa: 193..207
+tarifa: 193..207
 identificacao: 208..217
 res_banco2: 218..239
