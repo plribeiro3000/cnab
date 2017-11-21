@@ -23,12 +23,15 @@ module Cnab
       header_lote = Line.new(f.gets, definition.header_lote)
 
       detalhes = []
+      segmento_y_50 = []
       while(line = f.gets)
         if line[7] == "5"
           trailer_lote = Line.new(line, definition.trailer_lote)
           break
         end
-        if merge
+        if line[13] == "Y"
+          segmento_y_50 << Line.new(line, definition.segmento_y_50)
+        elsif merge
           detalhes << Detalhe.merge(line, f.gets, definition)
         else
           detalhes << Detalhe.parse(line, definition)
@@ -39,6 +42,7 @@ module Cnab
       Retorno.new({ :header_arquivo => header_arquivo,
                     :header_lote => header_lote,
                     :detalhes => detalhes,
+                    :segmento_y_50 => segmento_y_50,
                     :trailer_lote => trailer_lote,
                     :trailer_arquivo => trailer_arquivo  })
     end

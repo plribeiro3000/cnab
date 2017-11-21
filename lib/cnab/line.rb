@@ -3,7 +3,7 @@ module Cnab
     include PrettyInspect
 
     def initialize(line, definition)
-      raise Exceptions::LineNotParseable unless line.size == 242
+      raise Exceptions::LineNotParseable if line.size != 241 and line.size != 242
 
       @line = line
       @definition = definition

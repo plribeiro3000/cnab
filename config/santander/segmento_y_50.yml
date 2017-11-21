@@ -1,0 +1,5 @@
+banco: 0..2
+lote: 3..6
+tipo_registro: 7..7
+num_registro: 8..12
+segmento: 13..13
