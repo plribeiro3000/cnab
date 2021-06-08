@@ -3,6 +3,7 @@ require "yaml"
 
 module Cnab
   autoload :Line, 'cnab/line'
+  autoload :Lote, 'cnab/lote'
   autoload :MergedLines, 'cnab/merged_lines'
   autoload :Detalhe, 'cnab/detalhe'
   autoload :Retorno, 'cnab/retorno'
@@ -20,27 +21,32 @@ module Cnab
 
     File.open(file, 'rb') do |f|
       header_arquivo = Line.new(f.gets, definition.header_arquivo)
-      header_lote = Line.new(f.gets, definition.header_lote)
 
-      detalhes = []
+      lotes = []
       while(line = f.gets)
-        if line[7] == "5"
-          trailer_lote = Line.new(line, definition.trailer_lote)
+        if line[7] == "1"
+          lote = {
+            header_lote: Line.new(line, definition.header_lote),
+            detalhes: []
+          }
+        elsif line[7] == "3"
+          if merge
+            lote[:detalhes] << Detalhe.merge(line, f.gets, definition)
+          else
+            lote[:detalhes] << Detalhe.parse(line, definition)
+          end
+        elsif line[7] == "5"
+          lote[:trailer_lote] = Line.new(line, definition.trailer_lote)
+          lotes << Lote.new(lote)
+        elsif line[7] == "9"
+          trailer_arquivo = Line.new(line, definition.trailer_arquivo)
           break
-        end
-        if merge
-          detalhes << Detalhe.merge(line, f.gets, definition)
-        else
-          detalhes << Detalhe.parse(line, definition)
         end
       end
 
-      trailer_arquivo = Line.new(f.gets, definition.trailer_arquivo)
-      Retorno.new({ :header_arquivo => header_arquivo,
-                    :header_lote => header_lote,
-                    :detalhes => detalhes,
-                    :trailer_lote => trailer_lote,
-                    :trailer_arquivo => trailer_arquivo  })
+      Retorno.new({ header_arquivo: header_arquivo,
+                    lotes: lotes,
+                    trailer_arquivo: trailer_arquivo  })
     end
   end
 

@@ -1,11 +1,11 @@
 module Cnab
-  class Retorno
+  class Lote
     include PrettyInspect
 
     def initialize(args = {})
-      @header_arquivo = args[:header_arquivo]
-      @lotes = args[:lotes]
-      @trailer_arquivo = args[:trailer_arquivo]
+      @header_lote = args[:header_lote]
+      @trailer_lote = args[:trailer_lote]
+      @detalhes = args[:detalhes] || []
     end
 
     def method_missing(method_name)

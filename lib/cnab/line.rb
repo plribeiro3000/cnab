@@ -7,6 +7,10 @@ module Cnab
 
       @line = line
       @definition = definition
+
+      definition.instance_variable_get("@definition").each do |k, v|
+        instance_variable_set("@#{k}", @line[Range.new *v.split('..').map{|m| m.to_i }])
+      end
     end
 
     def method_missing(method_name)

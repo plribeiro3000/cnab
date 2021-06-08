@@ -32,6 +32,14 @@ describe Cnab::Configs do
       it "should load trailer_arquivo configs" do
         Cnab::Configs.new('08.7').trailer_arquivo.should be_an_instance_of(Cnab::Config)
       end
+
+      it "should load segmento_g configs" do
+        Cnab::Configs.new('santander').segmento_g.should be_an_instance_of(Cnab::Config)
+      end
+
+      it "should load segmento_h configs" do
+        Cnab::Configs.new('santander').segmento_h.should be_an_instance_of(Cnab::Config)
+      end
     end
   end
 end

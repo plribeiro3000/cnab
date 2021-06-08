@@ -7,6 +7,8 @@ module Cnab
       @header_lote = Config.new(version, 'header_lote')
       @segmento_t = Config.new(version, 'segmento_t')
       @segmento_u = Config.new(version, 'segmento_u')
+      @segmento_g = Config.new(version, 'segmento_g')
+      @segmento_h = Config.new(version, 'segmento_h')
       @trailer_lote = Config.new(version, 'trailer_lote')
       @trailer_arquivo = Config.new(version, 'trailer_arquivo')
     end
